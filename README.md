@@ -2,7 +2,7 @@
 
 Explore SQL inference and editor feedback with SQLite, PostgreSQL, and MySQL examples. SQLite also runs real queries against a disposable local database.
 
-This playground uses the TypeScript **7.1.0-beta** editor backend from [typed-sql PR #214](https://github.com/Lojhan/typed-sql/pull/214). The SDK changes are not on npm's `latest` tag yet, so setup builds the immutable upstream commit [`c4f281d`](https://github.com/Lojhan/typed-sql/commit/c4f281d70eff41e0559cc1e687d741300cfa0ed4). The ordinary compile-time checker remains on TypeScript 7.0.2.
+This playground uses the TypeScript **7.1.0-beta** editor backend. Setup builds immutable upstream commit [`44eb94c`](https://github.com/Lojhan/typed-sql/commit/44eb94c03a51b1050b662839bb0848ef217e91ec), including the dependency security fixes and native editor SDK integration. The editor companions remain experimental; the ordinary compile-time checker uses TypeScript 7.0.2.
 
 ## Requirements
 

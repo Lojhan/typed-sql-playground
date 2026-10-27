@@ -11,8 +11,8 @@ import {
 import { join, relative } from "node:path";
 import { cli, grammars, pnpm, root, run, runtime, upstream } from "./process.mjs";
 
-// A published immutable commit: npm latest does not contain this beta SDK yet.
-const revision = "c4f281d70eff41e0559cc1e687d741300cfa0ed4";
+// Pin the audited upstream implementation, including its experimental editor SDK.
+const revision = "44eb94c03a51b1050b662839bb0848ef217e91ec";
 if (Number(process.versions.node.split(".")[0]) < 24)
   throw new Error("Use Node.js 24.10 or newer, then run pnpm run setup again.");
 await mkdir(upstream, { recursive: true });
