@@ -1,0 +1,19 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "SQLite: Run CRUD demo",
+      "type": "process",
+      "command": "node",
+      "args": ["--import", "../.runtime/node_modules/tsx/dist/loader.mjs", "src/demo.ts"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    }
+  ]
+}

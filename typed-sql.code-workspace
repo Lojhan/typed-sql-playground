@@ -1,0 +1,27 @@
+{
+  "folders": [
+    {
+      "name": "SQLite \u2014 runnable CRUD",
+      "path": "sqlite"
+    },
+    {
+      "name": "PostgreSQL \u2014 editor cases",
+      "path": "postgres"
+    },
+    {
+      "name": "MySQL \u2014 editor cases",
+      "path": "mysql"
+    }
+  ],
+  "settings": {
+    "js/ts.experimental.useTsgo": true,
+    "typedSql.providerMode": "native-sdk",
+    "editor.hover.delay": 200,
+    "editor.inlayHints.enabled": "on",
+    "workbench.startupEditor": "none",
+    "window.title": "typed-sql beta playground \u2014 ${activeEditorShort}"
+  },
+  "extensions": {
+    "recommendations": ["TypeScriptTeam.native-preview", "lojhan.typed-sql"]
+  }
+}

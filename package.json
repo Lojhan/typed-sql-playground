@@ -1,0 +1,24 @@
+{
+  "name": "typed-sql-playground",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "license": "MIT",
+  "packageManager": "pnpm@10.32.1",
+  "engines": {
+    "node": ">=24.10"
+  },
+  "scripts": {
+    "setup": "node scripts/setup.mjs",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "check": "node scripts/check.mjs",
+    "demo": "node scripts/demo.mjs",
+    "reset": "node sqlite/setup.mjs",
+    "editor:install": "node scripts/install-editor.mjs",
+    "open": "code .runtime/playground.code-workspace"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.6.3"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "typed-sql-playground-mysql",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "typed-sql check --file src/00-playground.ts --project tsconfig.valid.json"
+  }
+}

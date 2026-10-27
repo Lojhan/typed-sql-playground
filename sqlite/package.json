@@ -1,0 +1,10 @@
+{
+  "name": "typed-sql-playground-sqlite",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "typed-sql check --file src/00-playground.ts --project tsconfig.valid.json",
+    "demo": "node --import tsx src/demo.ts",
+    "reset": "node setup.mjs"
+  }
+}
