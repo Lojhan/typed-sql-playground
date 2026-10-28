@@ -1,20 +1,21 @@
-import {
-  access,
-  copyFile,
-  mkdir,
-  readFile,
-  readdir,
-  realpath,
-  symlink,
-  writeFile,
-} from "node:fs/promises";
+import { access, copyFile, mkdir, readFile, realpath, symlink, writeFile } from "node:fs/promises";
 import { join, relative } from "node:path";
 import { cli, grammars, pnpm, root, run, runtime, upstream } from "./process.mjs";
 
 // Pin the audited upstream implementation, including its experimental editor SDK.
-const revision = "44eb94c03a51b1050b662839bb0848ef217e91ec";
-if (Number(process.versions.node.split(".")[0]) < 24)
-  throw new Error("Use Node.js 24.10 or newer, then run pnpm run setup again.");
+const release = JSON.parse(await readFile(join(root, "release.json"), "utf8"));
+const revision = release.sourceCommit;
+const [major, minor, patch] = process.versions.node.split(".").map(Number);
+if (
+  !(
+    major > 25 ||
+    (major === 25 && minor >= 1) ||
+    (major === 24 && (minor > 11 || (minor === 11 && patch >= 1)))
+  )
+)
+  throw new Error(
+    "Use Node.js 24.11.1 or a newer supported SQL-file runtime, then run setup again.",
+  );
 await mkdir(upstream, { recursive: true });
 try {
   await access(join(upstream, ".git"));
@@ -35,9 +36,14 @@ await pnpm(["exec", "tsc", "-b"], upstream);
 await run(process.execPath, ["scripts/build-editor-sdk.mjs"], upstream);
 await pnpm(["--filter", "./editors/vscode", "package:vsix"], upstream);
 
-const tarballs = join(runtime, "tarballs");
-await mkdir(tarballs, { recursive: true });
-const dependencies = { typescript: "7.0.2", tsx: "4.23.15", "@types/node": "24.19.2" };
+await mkdir(runtime, { recursive: true });
+const dependencies = {
+  typescript: "7.0.2",
+  tsx: "4.23.15",
+  "@types/node": "24.19.2",
+  "@libsql/client": "0.18.0",
+  vite: "6.4.5",
+};
 for (const name of [
   "ast",
   "core",
@@ -48,16 +54,12 @@ for (const name of [
   "postgres",
   "mysql",
   "sqlite",
+  "adapters",
   "ts-bridge",
   "language-server",
   "cli",
 ]) {
-  const directory = join(upstream, "packages", name);
-  const manifest = JSON.parse(await readFile(join(directory, "package.json"), "utf8"));
-  const archive = `${manifest.name.replace(/^@/u, "").replaceAll("/", "-")}-${manifest.version}.tgz`;
-  await pnpm(["pack", "--pack-destination", tarballs], directory);
-  if (!(await readdir(tarballs)).includes(archive)) throw new Error(`Missing archive ${archive}`);
-  dependencies[manifest.name] = `file:tarballs/${archive}`;
+  dependencies[`@typed-sql/${name}`] = release.version;
 }
 await writeFile(
   join(runtime, "package.json"),
@@ -67,6 +69,7 @@ await writeFile(
     2,
   ) + "\n",
 );
+// Application dependencies come from npm; the pinned checkout supplies the local editor VSIX.
 await pnpm(["install", "--ignore-workspace", "--ignore-scripts", "--no-frozen-lockfile"], runtime);
 await copyFile(
   join(upstream, "artifacts/typed-sql-vscode.vsix"),
@@ -97,7 +100,9 @@ for (const grammar of grammars) {
     [
       cli,
       "generate",
-      ...(grammar === "sqlite" ? [] : ["--snapshot", "schema/catalog.snapshot.json"]),
+      ...(["sqlite", "portable"].includes(grammar)
+        ? []
+        : ["--snapshot", "schema/catalog.snapshot.json"]),
     ],
     app,
   );

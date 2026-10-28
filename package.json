@@ -6,7 +6,7 @@
   "license": "MIT",
   "packageManager": "pnpm@10.32.1",
   "engines": {
-    "node": ">=24.10"
+    "node": "^24.11.1 || >=25.1.0"
   },
   "scripts": {
     "setup": "node scripts/setup.mjs",
@@ -16,7 +16,9 @@
     "demo": "node scripts/demo.mjs",
     "reset": "node sqlite/setup.mjs",
     "editor:install": "node scripts/install-editor.mjs",
-    "open": "code .runtime/playground.code-workspace"
+    "open": "code .runtime/playground.code-workspace",
+    "demo:portable": "node scripts/demo-portable.mjs",
+    "build:worker": "node scripts/build-worker.mjs"
   },
   "devDependencies": {
     "@biomejs/biome": "2.6.3"

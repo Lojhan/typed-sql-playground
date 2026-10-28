@@ -6,7 +6,7 @@ export const root = fileURLToPath(new URL("../", import.meta.url));
 export const runtime = join(root, ".runtime");
 export const upstream = join(root, ".upstream");
 export const cli = join(runtime, "node_modules/@typed-sql/cli/dist/packages/cli/src/cli.js");
-export const grammars = ["sqlite", "postgres", "mysql"];
+export const grammars = ["sqlite", "postgres", "mysql", "portable"];
 
 export function run(command, args, cwd = root, env = process.env) {
   return new Promise((resolve, reject) => {
