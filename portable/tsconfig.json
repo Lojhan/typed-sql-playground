@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "noEmit": true,
+    "target": "ES2024",
+    "module": "NodeNext",
+    "skipLibCheck": true,
+    "types": ["node"],
+    "allowImportingTsExtensions": true
+  },
+  "contentMappers": [
+    {
+      "package": "@typed-sql/ts-bridge",
+      "extensions": [".sql"]
+    }
+  ],
+  "include": ["src/**/*.ts", "policy.ts", "typed-sql.config.ts"]
+}

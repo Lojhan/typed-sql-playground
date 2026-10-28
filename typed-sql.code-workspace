@@ -11,6 +11,10 @@
     {
       "name": "MySQL \u2014 editor cases",
       "path": "mysql"
+    },
+    {
+      "name": "JSON + SQL files + portable adapters",
+      "path": "portable"
     }
   ],
   "settings": {

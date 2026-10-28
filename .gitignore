@@ -6,3 +6,5 @@ node_modules
 *.sqlite-wal
 *.log
 .DS_Store
+
+**/dist/
